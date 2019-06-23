@@ -52,6 +52,15 @@ export default new Router({
       name: 'Tournament',
       component: () => import(/* webpackChunkName: "tournaments" */ './views/Tournament.vue'),
     },
-
+    {
+      path: '/register',
+      name: 'Registration',
+      component: () => import(/* webpackChunkName: "enter" */ './views/Register.vue'),
+    },
+    {
+      path: '/login',
+      name: 'LogIn',
+      component: () => import(/* webpackChunkName: "enter" */ './views/LogIn.vue'),
+    },
   ],
 });
