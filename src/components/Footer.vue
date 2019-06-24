@@ -9,16 +9,15 @@
         Contribute on GitHub:
         <a href="https://github.com/aalekseevx/AIforces" class="button is-small">
           <b-icon
-            pack="fab"
-            icon="github"
+            icon="github-circle"
           >
           </b-icon>
           <span>AIForces</span>
         </a>
         <a href="http://github.com/AbsoluteNikola/AIforcesJudge" class="button is-small">
           <b-icon
-            pack="fab"
-            icon="github"
+            pack="mdi"
+            icon="github-circle"
           >
           </b-icon>
           <span>AIForces Judge</span>
