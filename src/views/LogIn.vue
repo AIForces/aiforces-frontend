@@ -12,7 +12,7 @@
         <b-input v-model="pass" type="password" password-reveal></b-input>
       </b-field>
       <b-field>
-        <b-button @click="login(name, pass)" type="is-info">Log in</b-button>
+        <b-button @click="login({name, pass})" type="is-info">Log in</b-button>
       </b-field>
     </div>
   </div>

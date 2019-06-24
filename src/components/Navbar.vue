@@ -29,24 +29,30 @@
           Турниры
         </router-link>
       </div>
-      <div class="navbar-end">
-        <router-link class="navbar-item" to="/register">
-          <b-button type="is-info">Регистрация</b-button>
-        </router-link>
-        <router-link class="navbar-item" to="/login">
-          <b-button type="is-info">Вход</b-button>
-        </router-link>
+      <div v-if="!authorized" class="navbar-end">
+          <router-link class="navbar-item" to="/register">
+            <b-button type="is-info">Регистрация</b-button>
+          </router-link>
+          <router-link class="navbar-item" to="/login">
+            <b-button type="is-info">Вход</b-button>
+          </router-link>
+      </div>
+      <div v-else class="navbar-end">
+        <div class="navbar-item">
+         <b-button @click="logout" type="is-info">Выход</b-button>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
-  computed: mapState('Users', ['authorized']),
+  computed: mapGetters('Users', ['authorized']),
+  methods: mapActions('Users', ['logout']),
 };
 </script>
 

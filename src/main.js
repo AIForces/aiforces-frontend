@@ -13,8 +13,10 @@ Vue.config.productionTip = false;
 
 Vue.use(Buefy);
 
-new Vue({
+const vm = new Vue({
   router,
   store,
   render: h => h(App),
 }).$mount('#app');
+
+window.vm = vm;
