@@ -39,7 +39,7 @@
       </div>
       <div v-else class="navbar-end">
         <div class="navbar-item">
-         <b-button @click="logout" type="is-info">Выход</b-button>
+         <b-button @click="logout" type="is-danger">Выход</b-button>
         </div>
       </div>
     </div>

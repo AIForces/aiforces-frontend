@@ -26,7 +26,7 @@
 
 
       <b-field>
-        <b-button @click="register" type="is-info">Log in</b-button>
+        <b-button @click.enter="register" type="is-info">Зарегестрироваться</b-button>
       </b-field>
     </div>
   </div>
