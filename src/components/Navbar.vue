@@ -4,8 +4,17 @@
       <router-link class="navbar-item" to="/">
         <h1 class="title">AIForces. Essoila 2019</h1>
       </router-link>
+      <a role="button"
+         :class="['navbar-burger', {'is-active': activeBurger}]"
+         @click="activeBurger = !activeBurger"
+         aria-label="menu" aria-expanded="false"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
-    <div class="navbar-menu">
+    <div :class="['navbar-menu', {'is-active': activeBurger}]">
       <div class="navbar-start">
         <router-link class="navbar-item" to="/rules">
           Правила
@@ -51,6 +60,11 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      activeBurger: false,
+    };
+  },
   computed: mapGetters('Users', ['authorized']),
   methods: mapActions('Users', ['logout']),
 };
