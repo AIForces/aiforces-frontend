@@ -1,19 +1,38 @@
 <template>
   <div>
-    <h1>Отослать код</h1>
+    <h1 class="title">Отослать код</h1>
     <b-field label="Название">
       <b-input v-model="name"></b-input>
     </b-field>
     <b-field label="Язык">
-      <b-select placeholder="Выберите язык"></b-select>
+      <b-select placeholder="Выберите язык" v-model="compiler">
+        <option
+          v-for="option in langs.map((e, i) => {return  {el: e, id: i} })"
+          :value="option.el"
+          :key="option.id">
+          {{ option.el }}
+        </option>
+      </b-select>
     </b-field>
-    <b-field label="Имя пользователя">
-      <b-input v-model="name"></b-input>
+    <b-field label="Исходный код">
+      <b-upload v-model="file"
+                @input="readFile"
+                drag-drop
+                expanded
+      >
+        <b-input v-model="code" type="textarea" expanded></b-input>
+      </b-upload>
+    </b-field>
+    <b-field>
+      <b-button @click="create({name, compiler, code})" type="is-info">Отправить</b-button>
     </b-field>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
+
 export default {
   name: 'NewSubmission',
   data() {
@@ -21,11 +40,33 @@ export default {
       name: '',
       compiler: '',
       code: '',
+      file: null,
+      langs: ['Python 3.7', 'GNU C++ 17'],
     };
+  },
+  methods: {
+    ...mapActions('Submissions', ['create']),
+    readFile(file) {
+      const reader = new FileReader();
+      console.log(reader);
+      reader.onload = () => {
+        this.code = reader.result;
+      };
+      reader.readAsText(file);
+    },
+  },
+  computed: {
+  },
+  components: {
   },
 };
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .upload .upload-draggable {
+    width: 100%;
+  }
+  .textarea {
+    height: 300px;
+  }
 </style>
