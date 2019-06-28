@@ -4,7 +4,7 @@ import Rules from './views/Rules.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
 
@@ -64,3 +64,14 @@ export default new Router({
     },
   ],
 });
+
+router.beforeResolve((to, from, next) => {
+  console.log(to.path);
+  if (window.vm.$store.state.Users.authorized || to.path === '/register' || to.path === '/login') {
+    next();
+  } else {
+    next('/login');
+  }
+});
+
+export default router;
