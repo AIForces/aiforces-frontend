@@ -40,11 +40,14 @@
         </b-table-column>
 
         <b-table-column field="status" label="Статус">
-          {{ props.row.status }}
+          <span :class="statusColor(props.row.status)"> {{ props.row.status }}</span>
         </b-table-column>
 
         <b-table-column field="verdict" label="Вердикт">
-          {{ props.row.verdict }}
+          <span :class="verdictColor(props.row.verdict)"> {{ props.row.verdict }}</span>
+        </b-table-column>
+        <b-table-column label="Код">
+          <show-code-button :code="code" :language="props.row.lang"></show-code-button>
         </b-table-column>
       </template>
     </b-table>
@@ -53,9 +56,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import ShowCodeButton from '../components/ShowCodeButton.vue';
 
 export default {
   name: 'SubmissionsList',
+  components: {
+    ShowCodeButton,
+  },
   data() {
     return {
       columns: [
@@ -102,6 +109,18 @@ export default {
         message: 'вы уверены, что хотите открыть посылку? Это действие невозможно отменить',
         onConfirm: () => { this.openSubmission(id); },
       });
+    },
+    verdictColor(verdict) {
+      if (verdict === 'OK') {
+        return 'has-text-success';
+      }
+      return 'has-text-danger';
+    },
+    statusColor(status) {
+      if (status === 'Протестировано') {
+        return 'has-text-success';
+      }
+      return 'has-text-warning';
     },
   },
 };

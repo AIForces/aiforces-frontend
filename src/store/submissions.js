@@ -39,6 +39,7 @@ const actions = {
       params: {
         id,
       },
+      headers: { 'Content-Type': 'application/json' },
     })
       .then(() => {
         ctx.commit('SET_USED_FOR_TOURS', id);
