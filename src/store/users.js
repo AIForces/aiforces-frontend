@@ -17,8 +17,8 @@ const actions = {
     axios.post('/api/sessions/create', data)
       .then((response) => {
         console.log(response);
-        window.vm.$router.push('/');
         ctx.commit('SET_AUTHORIZED', true);
+        window.vm.$router.push('/');
       })
       .catch(catchError);
   },
