@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h1 class="title">Мои посылки</h1>
+    <div class="level">
+      <div class="level-left">
+        <h1 class="title level-item">Мои посылки</h1>
+      </div>
+      <div class="level-right">
+        <b-button @click="update">
+          <b-icon icon="update"></b-icon>
+        </b-button>
+      </div>
+    </div>
     <b-table
       :data="submissions"
     >
@@ -109,6 +118,9 @@ export default {
   computed: mapGetters('Submissions', ['submissions', 'primary']),
   methods: {
     ...mapActions('Submissions', ['openSubmission', 'setPrimary']),
+    update() {
+      this.$store.dispatch('Submissions/update');
+    },
     confirmOpening(id) {
       this.$dialog.confirm({
         message: 'вы уверены, что хотите открыть посылку? Это действие невозможно отменить',
