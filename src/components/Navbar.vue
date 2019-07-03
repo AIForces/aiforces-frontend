@@ -2,7 +2,8 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
-        <h1 class="title">AIForces. Essoila 2019</h1>
+        <img src="/favicon.ico" class="logo">
+        <h1 class="title">AIForces</h1>
       </router-link>
       <a role="button"
          :class="['navbar-burger', {'is-active': activeBurger}]"
@@ -71,5 +72,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .logo {
+    margin-right: 5px;
+  }
 </style>
