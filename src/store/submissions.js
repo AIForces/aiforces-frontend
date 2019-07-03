@@ -101,7 +101,7 @@ const mutations = {
   SET_SUBMISSION_OPEN(state, id) {
     for (let i = 0; i < state.submissions.length; i += 1) {
       if (state.submissions[i].id === id) {
-        state.submissions[i].used_for_ch = true;
+        state.submissions[i].opened = true;
       }
     }
   },
