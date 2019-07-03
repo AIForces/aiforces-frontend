@@ -6,9 +6,7 @@ window.axios = axios;
 
 const state = {
   used_for_tours: null,
-  submissions: [{
-    id: 9, name: 'cool 2', used_for_ch: false, used_for_tours: false, lang: 'GNU C++ 17', creator: '123', opened: false, status: 'Протестировано', verdict: 'CE', created_at: '29 Jun 20:27',
-  }],
+  submissions: [],
 };
 
 
@@ -21,15 +19,32 @@ const actions = {
     };
     axios.post('/api/submissions/create', data)
       .then(() => {
-        ctx.commit('ADD_SUBMISSION', info);
         showInfo('Посылка отправлена');
       })
       .catch(catchError);
   },
   update(ctx) {
-    axios.get('/api/submissions')
+    axios.get('/api/submissions', {
+      params: {
+        keys: ['id', 'name', 'created_at', 'lang', 'status', 'verdict', 'used_for_ch', 'used_for_tours'],
+      },
+    })
       .then((response) => {
-        ctx.commit('SET_SUBMISSIONS', response.data);
+        console.log(response);
+        const mp = new Map(response.data.map(val => [val.id, val]));
+
+        ctx.commit('SET_SUBMISSIONS', mp);
+      })
+      .catch(catchError);
+  },
+  getCode(ctx, id) {
+    axios.get(`/api/submissions/${id}`, {
+      params: {
+        keys: ['code'],
+      },
+    })
+      .then((response) => {
+        ctx.commit('SET_CODE', { id, code: response.data.code });
       })
       .catch(catchError);
   },
@@ -64,12 +79,25 @@ const actions = {
 
 const mutations = {
   // eslint-disable-next-line no-shadow
-  ADD_SUBMISSION(state, info) {
-    state.submissions.push(info);
-  },
-  // eslint-disable-next-line no-shadow
   SET_SUBMISSIONS(state, submissions) {
-    state.submissions = submissions;
+    for (let i = 0; i < state.submissions.length; i += 1) {
+      const { id } = state.submissions[i];
+      if (submissions.has(id)) {
+        state.submissions[i] = {
+          ...state.submissions[i],
+          ...submissions.get(id),
+        };
+        submissions.delete(id);
+      }
+    }
+    const arr = [];
+    submissions.forEach((val) => {
+      if (val.code === undefined) {
+        val.code = undefined;
+      }
+      arr.push(val);
+    });
+    state.submissions = arr.concat(state.submissions);
   },
   // eslint-disable-next-line no-shadow
   SET_USED_FOR_TOURS(state, id) {
@@ -82,6 +110,15 @@ const mutations = {
         state.submissions[i].used_for_ch = true;
       }
     }
+  },
+  // eslint-disable-next-line no-shadow
+  SET_CODE(state, { id, code }) {
+    console.log(id, code);
+    state.submissions.forEach((s) => {
+      if (s.id === id) {
+        s.code = code;
+      }
+    });
   },
 };
 

@@ -24,15 +24,12 @@
       </b-upload>
     </b-field>
     <b-field>
-      <b-button @click="create({name, compiler, code})" type="is-info">Отправить</b-button>
+      <b-button @click="create" type="is-info">Отправить</b-button>
     </b-field>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
-
 export default {
   name: 'NewSubmission',
   data() {
@@ -45,7 +42,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions('Submissions', ['create']),
     readFile(file) {
       const reader = new FileReader();
       console.log(reader);
@@ -53,6 +49,14 @@ export default {
         this.code = reader.result;
       };
       reader.readAsText(file);
+    },
+    create() {
+      console.log('create');
+      this.$store.dispatch('Submissions/create', {
+        name: this.name,
+        code: this.code,
+        compiler: this.compiler,
+      });
     },
   },
   computed: {

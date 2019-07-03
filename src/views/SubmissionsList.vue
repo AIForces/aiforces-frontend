@@ -47,7 +47,12 @@
           <span :class="verdictColor(props.row.verdict)"> {{ props.row.verdict }}</span>
         </b-table-column>
         <b-table-column label="Код">
-          <show-code-button :code="code" :language="props.row.lang"></show-code-button>
+          <show-code-button
+            @getCode="getCode(props.row.id)"
+            :code="props.row.code"
+            :language="props.row.lang"
+          >
+          </show-code-button>
         </b-table-column>
       </template>
     </b-table>
@@ -109,6 +114,10 @@ export default {
         message: 'вы уверены, что хотите открыть посылку? Это действие невозможно отменить',
         onConfirm: () => { this.openSubmission(id); },
       });
+    },
+    getCode(id) {
+      console.log('getCode', id);
+      this.$store.dispatch('Submissions/getCode', id);
     },
     verdictColor(verdict) {
       if (verdict === 'OK') {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Rules from './views/Rules.vue';
+import store from './store';
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ const router = new Router({
     {
       path: '/submissions',
       name: 'SubmissionsList',
+      beforeEnter: (to, from, next) => {
+        console.log(store);
+        store.dispatch('Submissions/update');
+        next();
+      },
       component: () => import(/* webpackChunkName: "submissions" */ './views/SubmissionsList.vue'),
     },
     {

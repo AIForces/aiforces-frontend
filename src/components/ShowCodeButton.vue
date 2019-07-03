@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-button @click="active = true">
+  <b-button @click="activate">
     <b-icon icon="code-braces" size="is-small"></b-icon>
   </b-button>
   <b-modal :active.sync="active">
@@ -21,6 +21,12 @@ export default {
     };
   },
   methods: {
+    activate() {
+      if (this.code === undefined) {
+        this.$emit('getCode');
+      }
+      this.active = true;
+    },
     validateLanguage() {
       if (this.language.indexOf('C++') !== -1) {
         return 'c++';
