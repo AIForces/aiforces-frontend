@@ -21,6 +21,9 @@ const vm = new Vue({
   router,
   store,
   render: h => h(App),
+  mounted() {
+    this.$store.dispatch('Users/checkAuth');
+  },
 }).$mount('#app');
 
 window.vm = vm;

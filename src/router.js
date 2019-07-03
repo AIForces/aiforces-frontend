@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Rules from './views/Rules.vue';
+// eslint-disable-next-line import/no-cycle
 import store from './store';
 
 Vue.use(Router);
@@ -66,13 +67,18 @@ const router = new Router({
     {
       path: '/login',
       name: 'LogIn',
+      beforeEnter: (to, from, next) => {
+        console.log(1);
+        console.log(store);
+        store.dispatch('Users/checkAuth');
+        next();
+      },
       component: () => import(/* webpackChunkName: "enter" */ './views/LogIn.vue'),
     },
   ],
 });
 
 router.beforeResolve((to, from, next) => {
-  console.log(to.path);
   if (window.vm.$store.state.Users.authorized || to.path === '/register' || to.path === '/login') {
     next();
   } else {

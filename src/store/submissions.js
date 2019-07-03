@@ -50,12 +50,7 @@ const actions = {
   },
   useForTours(ctx, id) {
     // TODO: потыкать Сашу чтоб поменял api
-    axios.get('submissions/make_used_for_tours', {
-      params: {
-        id,
-      },
-      headers: { 'Content-Type': 'application/json' },
-    })
+    axios.post(`/api/submissions/${id}/make_primary`, {})
       .then(() => {
         ctx.commit('SET_USED_FOR_TOURS', id);
         showInfo(`Посылка №${id} будет использоваться для турниров`);
@@ -63,11 +58,7 @@ const actions = {
       .catch(catchError);
   },
   openSubmission(ctx, id) {
-    axios.get('submissions/make_opened', {
-      params: {
-        id,
-      },
-    })
+    axios.post(`/api/submissions/${id}/make_public`, {})
       .then(() => {
         ctx.commit('SET_SUBMISSION_OPEN', id);
         showInfo(`Посылка №${id} будет использоваться для дуэлей`);

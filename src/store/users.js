@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import { catchError, showInfo } from '../utils';
+// eslint-disable-next-line import/no-cycle
+import router from '../router';
 
 const state = {
   authorized: false,
@@ -40,11 +42,20 @@ const actions = {
         password_confirmation: info.password,
       },
     };
-
     axios.post('/api/users/create', data)
       .then(() => {
         showInfo('Регистрация успешна');
         window.vm.$router.push('/login');
+      })
+      .catch(catchError);
+  },
+  checkAuth(ctx) {
+    axios.get('api/sessions')
+      .then((response) => {
+        if (response.data.logged_in) {
+          ctx.commit('SET_AUTHORIZED', true);
+          router.push('/');
+        }
       })
       .catch(catchError);
   },
