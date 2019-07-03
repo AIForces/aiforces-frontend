@@ -36,6 +36,9 @@ export default {
       return '';
     },
   },
+  beforeUpdate() {
+    console.log('beforeUpdate');
+  },
 };
 </script>
 

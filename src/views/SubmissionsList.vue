@@ -5,8 +5,8 @@
       :data="submissions"
     >
       <template slot-scope="props">
-        <b-table-column field="used_for_ch" label="Открыть">
-          <b-button v-if="!props.row.used_for_ch" @click="confirmOpening(props.row.id)">
+        <b-table-column field="opened" label="Открыть">
+          <b-button v-if="!props.row.opened" @click="confirmOpening(props.row.id)">
             <b-icon icon="lock" size="is-small"></b-icon>
           </b-button>
           <b-button v-else disabled>
@@ -14,11 +14,11 @@
           </b-button>
         </b-table-column>
 
-        <b-table-column field="used_for_tours" label="Турнир">
-          <b-button v-if="props.row.id === used_for_tours">
+        <b-table-column field="primary" label="Турнир">
+          <b-button v-if="props.row.id === primary">
             <b-icon icon="heart" size="is-small"></b-icon>
           </b-button>
-          <b-button v-else @click="useForTours(props.row.id)">
+          <b-button v-else @click="setPrimary(props.row.id)">
             <b-icon icon="heart-outline" size="is-small"></b-icon>
           </b-button>
         </b-table-column>
@@ -76,7 +76,7 @@ export default {
           label: 'Открыть',
         },
         {
-          field: 'used_for_tours',
+          field: 'primary',
           label: 'Турнир',
         },
         {
@@ -106,9 +106,9 @@ export default {
       ],
     };
   },
-  computed: mapGetters('Submissions', ['submissions', 'used_for_tours']),
+  computed: mapGetters('Submissions', ['submissions', 'primary']),
   methods: {
-    ...mapActions('Submissions', ['openSubmission', 'useForTours']),
+    ...mapActions('Submissions', ['openSubmission', 'setPrimary']),
     confirmOpening(id) {
       this.$dialog.confirm({
         message: 'вы уверены, что хотите открыть посылку? Это действие невозможно отменить',

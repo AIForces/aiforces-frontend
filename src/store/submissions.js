@@ -5,7 +5,7 @@ import { catchError, showInfo } from '../utils';
 window.axios = axios;
 
 const state = {
-  used_for_tours: null,
+  primary: null,
   submissions: [],
 };
 
@@ -26,7 +26,7 @@ const actions = {
   update(ctx) {
     axios.get('/api/submissions', {
       params: {
-        keys: ['id', 'name', 'created_at', 'lang', 'status', 'verdict', 'used_for_ch', 'used_for_tours'],
+        keys: ['id', 'name', 'created_at', 'lang', 'status', 'verdict', 'opened', 'primary'],
       },
     })
       .then((response) => {
@@ -48,11 +48,11 @@ const actions = {
       })
       .catch(catchError);
   },
-  useForTours(ctx, id) {
+  setPrimary(ctx, id) {
     // TODO: потыкать Сашу чтоб поменял api
     axios.post(`/api/submissions/${id}/make_primary`, {})
       .then(() => {
-        ctx.commit('SET_USED_FOR_TOURS', id);
+        ctx.commit('SET_PRIMARY', id);
         showInfo(`Посылка №${id} будет использоваться для турниров`);
       })
       .catch(catchError);
@@ -80,6 +80,9 @@ const mutations = {
         };
         submissions.delete(id);
       }
+      if (state.submissions[i].primary) {
+        state.primary = state.submissions[i].id;
+      }
     }
     const arr = [];
     submissions.forEach((val) => {
@@ -91,8 +94,8 @@ const mutations = {
     state.submissions = arr.concat(state.submissions);
   },
   // eslint-disable-next-line no-shadow
-  SET_USED_FOR_TOURS(state, id) {
-    state.used_for_tours = id;
+  SET_PRIMARY(state, id) {
+    state.primary = id;
   },
   // eslint-disable-next-line no-shadow
   SET_SUBMISSION_OPEN(state, id) {
@@ -120,8 +123,12 @@ const getters = {
     return state.submissions;
   },
   // eslint-disable-next-line no-shadow
-  used_for_tours(state) {
-    return state.used_for_tours;
+  primary(state) {
+    return state.primary;
+  },
+  // eslint-disable-next-line no-shadow
+  openSubmissions(state) {
+    return state.submissions.filter(val => val.used_for_ch);
   },
 };
 
