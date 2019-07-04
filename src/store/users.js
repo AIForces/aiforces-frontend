@@ -53,7 +53,7 @@ const actions = {
       .catch(catchError);
   },
   checkAuth(ctx) {
-    axios.get('api/sessions')
+    axios.get('/api/sessions')
       .then((response) => {
         if (response.data.logged_in) {
           ctx.commit('SET_AUTHORIZED', true);

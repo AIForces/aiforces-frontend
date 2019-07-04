@@ -10,14 +10,14 @@ const state = {
 
 const actions = {
   getRules(ctx) {
-    axios.get('api/event/rules')
+    axios.get('/api/event/rules')
       .then((response) => {
         ctx.commit('SET_RULES', response.data);
       })
       .catch(catchError);
   },
   getStatements(ctx) {
-    axios.get('api/event/statements')
+    axios.get('/api/event/statements')
       .then((response) => {
         ctx.commit('SET_STATEMENTS', response.data);
       })

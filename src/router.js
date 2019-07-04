@@ -61,6 +61,7 @@ const router = new Router({
       path: '/challenges/new',
       name: 'NewChallenge',
       beforeEnter: (to, from, next) => {
+        console.log(store);
         if (store.state.Users.authorized) {
           store.dispatch('Users/getUsers');
         }
@@ -93,8 +94,6 @@ const router = new Router({
       path: '/login',
       name: 'LogIn',
       beforeEnter: (to, from, next) => {
-        console.log(1);
-        console.log(store);
         store.dispatch('Users/checkAuth');
         next();
       },

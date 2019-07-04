@@ -79,40 +79,6 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          field: 'used_for_ch',
-          label: 'Открыть',
-        },
-        {
-          field: 'primary',
-          label: 'Турнир',
-        },
-        {
-          field: 'id',
-          label: 'ID',
-        },
-        {
-          field: 'name',
-          label: 'Название',
-        },
-        {
-          field: 'created_at',
-          label: 'Время создания',
-        },
-        {
-          field: 'lang',
-          label: 'Язык',
-        },
-        {
-          field: 'status',
-          label: 'Статус',
-        },
-        {
-          field: 'verdict',
-          label: 'Вердикт',
-        },
-      ],
     };
   },
   computed: mapGetters('Submissions', ['submissions', 'primary']),
