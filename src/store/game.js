@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { catchError, showInfo } from '../utils';
+import { catchError } from '../utils';
 
 const state = {
   rules: '',
