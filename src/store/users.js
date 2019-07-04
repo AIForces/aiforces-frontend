@@ -6,6 +6,8 @@ import router from '../router';
 
 const state = {
   authorized: false,
+  self_id: null,
+  users: [],
 };
 
 
@@ -20,6 +22,7 @@ const actions = {
       .then((response) => {
         console.log(response);
         ctx.commit('SET_AUTHORIZED', true);
+        ctx.dispatch('checkAuth');
         window.vm.$router.push('/');
       })
       .catch(catchError);
@@ -54,8 +57,16 @@ const actions = {
       .then((response) => {
         if (response.data.logged_in) {
           ctx.commit('SET_AUTHORIZED', true);
+          ctx.commit('SET_SELF_ID', response.data.id);
           router.push('/');
         }
+      })
+      .catch(catchError);
+  },
+  getUsers(ctx) {
+    axios.get('/api/event/participants')
+      .then((response) => {
+        ctx.commit('SET_USERS', response.data.ids);
       })
       .catch(catchError);
   },
@@ -65,6 +76,14 @@ const mutations = {
   // eslint-disable-next-line no-shadow
   SET_AUTHORIZED(state, authorized) {
     state.authorized = authorized;
+  },
+  // eslint-disable-next-line no-shadow
+  SET_SELF_ID(state, id) {
+    state.self_id = id;
+  },
+  // eslint-disable-next-line no-shadow
+  SET_USERS(state, users) {
+    state.users = users;
   },
 };
 

@@ -19,6 +19,12 @@ const router = new Router({
     {
       path: '/rules',
       name: 'Rules',
+      beforeEnter: (to, from, next) => {
+        if (store.state.Users.authorized) {
+          store.dispatch('Game/getRules');
+        }
+        next();
+      },
       component: Rules,
     },
     {
@@ -27,6 +33,12 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
+      beforeEnter: (to, from, next) => {
+        if (store.state.Users.authorized) {
+          store.dispatch('Game/getStatements');
+        }
+        next();
+      },
       component: () => import(/* webpackChunkName: "statements" */ './views/Statements.vue'),
     },
     {
@@ -38,8 +50,9 @@ const router = new Router({
       path: '/submissions',
       name: 'SubmissionsList',
       beforeEnter: (to, from, next) => {
-        console.log(store);
-        store.dispatch('Submissions/update');
+        if (store.state.Users.authorized) {
+          store.dispatch('Submissions/update');
+        }
         next();
       },
       component: () => import(/* webpackChunkName: "submissions" */ './views/SubmissionsList.vue'),
@@ -47,11 +60,23 @@ const router = new Router({
     {
       path: '/challenges/new',
       name: 'NewChallenge',
+      beforeEnter: (to, from, next) => {
+        if (store.state.Users.authorized) {
+          store.dispatch('Users/getUsers');
+        }
+        next();
+      },
       component: () => import(/* webpackChunkName: "challenges" */ './views/NewChallenge.vue'),
     },
     {
       path: '/challenges/',
       name: 'ChallengesList',
+      beforeEnter: (to, from, next) => {
+        if (store.state.Users.authorized) {
+          store.dispatch('Users/getUsers');
+        }
+        next();
+      },
       component: () => import(/* webpackChunkName: "challenges" */ './views/ChallengesList.vue'),
     },
     {
@@ -79,7 +104,7 @@ const router = new Router({
 });
 
 router.beforeResolve((to, from, next) => {
-  if (window.vm.$store.state.Users.authorized || to.path === '/register' || to.path === '/login') {
+  if (store.state.Users.authorized || to.path === '/register' || to.path === '/login') {
     next();
   } else {
     next('/login');
