@@ -57,7 +57,10 @@
         </b-table-column>
 
         <b-table-column label="Игра">
-          <b-button>
+          <b-button
+            tag="router-link"
+            :to="`/visualizer/?id=${props.row.id}`"
+          >
             <b-icon icon="gamepad-variant"></b-icon>
           </b-button>
         </b-table-column>

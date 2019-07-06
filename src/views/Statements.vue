@@ -12,7 +12,7 @@ export default {
   watch: {
     statements() {
       // eslint-disable-next-line no-eval
-      eval(this.statements.js);
+      setTimeout(() => { eval(this.statements.js); }, 50);
     },
   },
 };

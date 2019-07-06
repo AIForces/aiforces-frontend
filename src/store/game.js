@@ -11,6 +11,10 @@ const state = {
     html: '',
     js: '',
   },
+  visualizer: {
+    html: '',
+    js: '',
+  },
 };
 
 
@@ -29,6 +33,12 @@ const actions = {
       })
       .catch(catchError);
   },
+  getVisualizer(ctx) {
+    axios.get('/api/event/visualizer')
+      .then((response) => {
+        ctx.commit('SET_VISUALIZER', response.data);
+      });
+  },
 };
 
 const mutations = {
@@ -40,6 +50,10 @@ const mutations = {
   SET_STATEMENTS(state, statements) {
     state.statements = statements;
   },
+  // eslint-disable-next-line no-shadow
+  SET_VISUALIZER(state, visualizer) {
+    state.visualizer = visualizer;
+  },
 };
 
 const getters = {
@@ -50,6 +64,10 @@ const getters = {
   // eslint-disable-next-line no-shadow
   statements(state) {
     return state.statements;
+  },
+  // eslint-disable-next-line no-shadow
+  visualizer(state) {
+    return state.visualizer;
   },
 };
 

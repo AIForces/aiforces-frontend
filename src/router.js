@@ -42,6 +42,17 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "statements" */ './views/Statements.vue'),
     },
     {
+      path: '/visualizer',
+      name: 'Visualizer',
+      beforeEnter: (to, from, next) => {
+        if (store.state.Users.authorized) {
+          store.dispatch('Game/getVisualizer');
+        }
+        next();
+      },
+      component: () => import(/* webpackChunkName: "statements" */ './views/Visualizer.vue'),
+    },
+    {
       path: '/submissions/new',
       name: 'NewSubmission',
       component: () => import(/* webpackChunkName: "submissions" */ './views/NewSubmission.vue'),

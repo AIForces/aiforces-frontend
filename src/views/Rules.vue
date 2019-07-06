@@ -12,7 +12,7 @@ export default {
   watch: {
     rules() {
       // eslint-disable-next-line no-eval
-      eval(this.rules.js);
+      setTimeout(() => { eval(this.rules.js); }, 50);
     },
   },
 };
