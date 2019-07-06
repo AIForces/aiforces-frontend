@@ -127,8 +127,12 @@ const getters = {
     return state.primary;
   },
   // eslint-disable-next-line no-shadow
-  openSubmissions(state) {
-    return state.submissions.filter(val => val.used_for_ch);
+  openedSubmissions(state) {
+    return state.submissions.filter(val => val.opened);
+  },
+  // eslint-disable-next-line no-shadow
+  closedSubmissions(state) {
+    return state.submissions.filter(val => !val.opened);
   },
 };
 

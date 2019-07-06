@@ -8,6 +8,7 @@ const state = {
   authorized: false,
   self_id: null,
   users: [],
+  foreignSubmissions: new Map(),
 };
 
 
@@ -67,6 +68,31 @@ const actions = {
     axios.get('/api/event/participants')
       .then((response) => {
         ctx.commit('SET_USERS', response.data.ids);
+        console.log('user ids:', response.data.ids);
+        for (let i = 0; i < response.data.ids.length; i += 1) {
+          ctx.dispatch('getUserSubmissions', response.data.ids[i].id);
+        }
+      })
+      .catch(catchError);
+  },
+  getUserSubmissions(ctx, id) {
+    axios.get(`/api/submissions/public/${id}`)
+      .then((response) => {
+        // eslint-disable-next-line no-shadow
+        const submissions = [];
+        console.log('ids:', response.data.ids);
+        for (let i = 0; i < response.data.ids.length; i += 1) {
+          axios.get(`/api/submissions/${response.data.ids[i]}`, {
+            params: {
+              keys: ['id', 'name', 'created_at'],
+            },
+          })
+            .then((response2) => {
+              submissions.push(response2.data);
+            })
+            .catch(catchError);
+        }
+        ctx.commit('SET_FOREIGN_SUBMISSIONS', { id, submissions });
       })
       .catch(catchError);
   },
@@ -85,12 +111,29 @@ const mutations = {
   SET_USERS(state, users) {
     state.users = users;
   },
+  // eslint-disable-next-line no-shadow
+  SET_FOREIGN_SUBMISSIONS(state, { id, submissions }) {
+    console.log('set foreign submissions', { id, submissions });
+    state.foreignSubmissions.set(id, submissions);
+  },
 };
 
 const getters = {
   // eslint-disable-next-line no-shadow
   authorized(state) {
     return state.authorized;
+  },
+  // eslint-disable-next-line no-shadow
+  users(state) {
+    return state.users;
+  },
+  // eslint-disable-next-line no-shadow
+  selfId(state) {
+    return state.self_id;
+  },
+  // eslint-disable-next-line no-shadow
+  foreignSubmissions(state) {
+    return state.foreignSubmissions;
   },
 };
 

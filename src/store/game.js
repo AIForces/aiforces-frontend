@@ -3,8 +3,14 @@ import axios from 'axios';
 import { catchError } from '../utils';
 
 const state = {
-  rules: '',
-  statements: '',
+  rules: {
+    html: '',
+    js: '',
+  },
+  statements: {
+    html: '',
+    js: '',
+  },
 };
 
 

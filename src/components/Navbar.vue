@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
-        <img src="/favicon.ico" class="logo">
+        <img alt="" src="/favicon.ico" class="logo">
         <h1 class="title">AIForces</h1>
       </router-link>
       <a role="button"
@@ -58,6 +58,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import resetStore from '../store';
 
 export default {
   name: 'Navbar',
@@ -67,7 +68,16 @@ export default {
     };
   },
   computed: mapGetters('Users', ['authorized']),
-  methods: mapActions('Users', ['logout']),
+  methods: {
+    ...mapActions('Users', {
+      doLogout: 'logout',
+    }),
+    logout() {
+      // TODO: разобраться с разными аккаунтами
+      this.doLogout();
+      resetStore();
+    },
+  },
 };
 </script>
 

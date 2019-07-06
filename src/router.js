@@ -61,9 +61,11 @@ const router = new Router({
       path: '/challenges/new',
       name: 'NewChallenge',
       beforeEnter: (to, from, next) => {
-        console.log(store);
         if (store.state.Users.authorized) {
           store.dispatch('Users/getUsers');
+          if (store.state.Submissions.submissions.length === 0) {
+            store.dispatch('Submissions/update');
+          }
         }
         next();
       },

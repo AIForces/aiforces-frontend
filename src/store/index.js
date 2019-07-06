@@ -3,12 +3,14 @@ import Vuex from 'vuex';
 
 import Challenges from './challenges';
 import Submissions from './submissions';
-import Users from './users';
 import Game from './game';
+
+// eslint-disable-next-line import/no-cycle
+import Users from './users';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     Challenges,
     Submissions,
@@ -16,3 +18,11 @@ export default new Vuex.Store({
     Game,
   },
 });
+
+export default store;
+
+const initialStateCopy = JSON.parse(JSON.stringify(store.state));
+
+export function resetState() {
+  store.replaceState(JSON.parse(JSON.stringify(initialStateCopy)));
+}
