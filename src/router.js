@@ -76,7 +76,7 @@ const router = new Router({
       name: 'ChallengesList',
       beforeEnter: (to, from, next) => {
         if (store.state.Users.authorized) {
-          store.dispatch('Users/getUsers');
+          store.dispatch('Challenges/update');
         }
         next();
       },
