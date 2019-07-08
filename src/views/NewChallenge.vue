@@ -88,7 +88,7 @@
 
       <h2 class="title is-5">Шаг 3. Выберите посылку противника</h2>
       <b-table
-        :data="allowUsers ? foreignSubmissions.get(opponent) : openedSubmissions.concat(closedSubmissions)"
+        :data="opponentSubmissions"
       >
         <template slot-scope="props">
           <b-table-column label="Выбор">
@@ -172,6 +172,7 @@ export default {
     ...mapGetters('Submissions', {
       openedSubmissions: 'openedSubmissions',
       closedSubmissions: 'closedSubmissions',
+      allSubmissions: 'submissions',
     }),
     ...mapGetters('Users', {
       users: 'users',
@@ -180,7 +181,7 @@ export default {
     }),
     allowUsers() {
       console.log(this.openedSubmissions.map(val => val.id));
-      return this.openedSubmissions.map(val => val.id).includes(this.my_chosen_submission);
+      return !this.closedSubmissions.map(val => val.id).includes(this.my_chosen_submission);
     },
     allowFight() {
       return !!this.opponent
@@ -188,6 +189,11 @@ export default {
         && !!this.my_chosen_submission
         && !!this.level
         && !!this.firsr_step;
+    },
+    opponentSubmissions() {
+      if (!this.opponent) return [];
+      if (this.allowUsers) return this.foreignSubmissions.get(this.opponent);
+      return this.allSubmissions;
     },
   },
   methods: {
