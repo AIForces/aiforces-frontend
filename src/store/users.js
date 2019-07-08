@@ -34,6 +34,8 @@ const actions = {
       .then(() => {
         window.vm.$router.push('/login');
         ctx.commit('SET_AUTHORIZED', false);
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
       })
       .catch(catchError);
   },
