@@ -6,6 +6,22 @@ import store from './store';
 
 Vue.use(Router);
 
+
+function updateData() {
+  if (!store.state.Users.authorized || store.state.Users.updated) return;
+
+  store.dispatch('Game/getRules');
+  store.dispatch('Game/getStatements');
+  store.dispatch('Game/getVisualizer');
+  store.dispatch('Submissions/update');
+  store.dispatch('Users/getUsers');
+  store.dispatch('Challenges/update');
+  store.dispatch('Tournaments/update');
+
+  store.state.Users.updated = true;
+}
+
+
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -20,9 +36,7 @@ const router = new Router({
       path: '/rules',
       name: 'Rules',
       beforeEnter: (to, from, next) => {
-        if (store.state.Users.authorized) {
-          store.dispatch('Game/getRules');
-        }
+        updateData();
         next();
       },
       component: Rules,
@@ -34,9 +48,7 @@ const router = new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       beforeEnter: (to, from, next) => {
-        if (store.state.Users.authorized) {
-          store.dispatch('Game/getStatements');
-        }
+        updateData();
         next();
       },
       component: () => import(/* webpackChunkName: "statements" */ './views/Statements.vue'),
@@ -45,9 +57,7 @@ const router = new Router({
       path: '/visualizer',
       name: 'Visualizer',
       beforeEnter: (to, from, next) => {
-        if (store.state.Users.authorized) {
-          store.dispatch('Game/getVisualizer');
-        }
+        updateData();
         next();
       },
       component: () => import(/* webpackChunkName: "statements" */ './views/Visualizer.vue'),
@@ -61,9 +71,7 @@ const router = new Router({
       path: '/submissions',
       name: 'SubmissionsList',
       beforeEnter: (to, from, next) => {
-        if (store.state.Users.authorized) {
-          store.dispatch('Submissions/update');
-        }
+        updateData();
         next();
       },
       component: () => import(/* webpackChunkName: "submissions" */ './views/SubmissionsList.vue'),
@@ -73,10 +81,7 @@ const router = new Router({
       name: 'NewChallenge',
       beforeEnter: (to, from, next) => {
         if (store.state.Users.authorized) {
-          store.dispatch('Users/getUsers');
-          if (store.state.Submissions.submissions.length === 0) {
-            store.dispatch('Submissions/update');
-          }
+          updateData();
         }
         next();
       },
@@ -86,17 +91,30 @@ const router = new Router({
       path: '/challenges/',
       name: 'ChallengesList',
       beforeEnter: (to, from, next) => {
-        if (store.state.Users.authorized) {
-          store.dispatch('Challenges/update');
-        }
+        updateData();
         next();
       },
       component: () => import(/* webpackChunkName: "challenges" */ './views/ChallengesList.vue'),
     },
     {
-      path: '/tournament',
-      name: 'Tournament',
-      component: () => import(/* webpackChunkName: "tournaments" */ './views/Tournament.vue'),
+      path: '/tournaments/:id',
+      name: 'TournamentsView',
+      props: true,
+      beforeEnter: (to, from, next) => {
+        updateData();
+        next();
+      },
+      component: () => import(/* webpackChunkName: "tournaments" */ './views/TournamentView.vue'),
+    },
+    {
+      path: '/tournaments',
+      name: 'TournamentsList',
+      beforeEnter: (to, from, next) => {
+        updateData();
+        console.log('matched index');
+        next();
+      },
+      component: () => import(/* webpackChunkName: "tournaments" */ './views/TournamentsList.vue'),
     },
     {
       path: '/register',
@@ -116,9 +134,14 @@ const router = new Router({
 });
 
 router.beforeResolve((to, from, next) => {
+  console.log(`${from.path} => ${to.path}`);
   if (store.state.Users.authorized || to.path === '/register' || to.path === '/login') {
     next();
   } else {
+    store.dispatch('Users/checkAuth');
+
+    if (store.state.Users.authorized) next();
+
     next('/login');
   }
 });

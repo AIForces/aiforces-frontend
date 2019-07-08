@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import Challenges from './challenges';
 import Submissions from './submissions';
 import Game from './game';
+import Tournaments from './tournaments';
 
 // eslint-disable-next-line import/no-cycle
 import Users from './users';
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
     Submissions,
     Users,
     Game,
+    Tournaments,
   },
 });
 

@@ -6,7 +6,7 @@
       </div>
       <div class="level-right">
         <b-button @click="update">
-          <b-icon icon="cached"></b-icon>
+          <b-icon icon="cached" custom-class=""></b-icon>
         </b-button>
       </div>
     </div>

@@ -6,6 +6,7 @@ import router from '../router';
 
 const state = {
   authorized: false,
+  updated: false,
   self_id: null,
   users: [],
   foreignSubmissions: new Map(),

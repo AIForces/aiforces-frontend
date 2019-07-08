@@ -32,10 +32,10 @@
         <router-link class="navbar-item" to="/challenges/new">
           Новая дуэль
         </router-link>
-        <router-link class="navbar-item" to="/challenges/">
+        <router-link class="navbar-item" to="/challenges">
           Дуэли
         </router-link>
-        <router-link class="navbar-item" to="/tournament">
+        <router-link class="navbar-item" to="/tournaments">
           Турниры
         </router-link>
       </div>
