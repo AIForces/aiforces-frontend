@@ -10,11 +10,9 @@ export default {
   computed: {
     ...mapGetters('Game', ['visualizer']),
   },
-  watch: {
-    visualizer() {
-      // eslint-disable-next-line no-eval
-      setTimeout(() => { eval(this.visualizer.js); }, 50);
-    },
+  created() {
+    // eslint-disable-next-line no-eval
+    this.$nextTick(() => { eval(this.visualizer.js); });
   },
 };
 </script>

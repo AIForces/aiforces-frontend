@@ -11,7 +11,7 @@ export default {
   computed: mapGetters('Game', ['statements']),
   created() {
     // eslint-disable-next-line no-eval
-    setTimeout(() => { eval(this.statements.js); }, 100);
+    this.$nextTick(() => { eval(this.statements.js); });
   },
 };
 </script>
