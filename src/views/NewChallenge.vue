@@ -81,7 +81,7 @@
         <option v-for="user in users" :value="user.id"
                 :key="user.id"
         >
-          {{ user.name }}
+          {{ user.username }}
         </option>
       </b-select>
       <br>
@@ -129,16 +129,16 @@
       <b-field>
         <p class="control">
           <b-button
-            @click="firsr_step = 1"
-            :type="(firsr_step === 1) ?'is-info' : ''"
+            @click="first_step = 1"
+            :type="(first_step === 1) ?'is-info' : ''"
           >
             Я
           </b-button>
         </p>
         <p class="control">
           <b-button
-            @click="firsr_step = 2"
-            :type="(firsr_step === 2) ?'is-info' : ''"
+            @click="first_step = 2"
+            :type="(first_step === 2) ?'is-info' : ''"
           >
             Противник
           </b-button>
@@ -165,7 +165,7 @@ export default {
       opponent_chosen_submission: null,
       opponent: null,
       level: 1,
-      firsr_step: 1,
+      first_step: 1,
     };
   },
   computed: {
@@ -188,7 +188,7 @@ export default {
         && !!this.opponent_chosen_submission
         && !!this.my_chosen_submission
         && !!this.level
-        && !!this.firsr_step;
+        && !!this.first_step;
     },
     opponentSubmissions() {
       if (!this.opponent) return [];
@@ -203,7 +203,7 @@ export default {
     create() {
       let sub1 = this.my_chosen_submission;
       let sub2 = this.opponent_chosen_submission;
-      if (this.firsr_step === 2) {
+      if (this.first_step === 2) {
         [sub1, sub2] = [sub2, sub1];
       }
       this.$store.dispatch('Challenges/create', {
