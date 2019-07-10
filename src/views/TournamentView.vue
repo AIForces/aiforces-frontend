@@ -103,13 +103,16 @@ export default {
     rating() {
       const rating = {};
       // eslint-disable-next-line no-restricted-syntax
+      for (const userId of Object.keys(this.users)) {
+        rating[userId] = 0;
+      }
+      // eslint-disable-next-line no-restricted-syntax
       for (const [id, data] of Object.entries(this.tournament.data)) {
-        rating[id] = 0;
         // eslint-disable-next-line no-restricted-syntax
         for (const [opponentId, fight] of Object.entries(data)) {
           if (opponentId !== id) {
-            console.log(id, fight);
             rating[id] += fight[0] * 3 + fight[1];
+            rating[opponentId] += fight[1] + fight[2] * 3;
           }
         }
       }
