@@ -30,12 +30,15 @@
 </template>
 
 <script>
+
+import { showError } from '../utils';
+
 export default {
   name: 'NewSubmission',
   data() {
     return {
       name: '',
-      compiler: '',
+      compiler: null,
       code: '',
       file: null,
       langs: ['Python 3.7', 'GNU C++ 17'],
@@ -52,6 +55,18 @@ export default {
     },
     create() {
       console.log('create');
+      if (!this.name) {
+        showError('Укажите имя');
+        return;
+      }
+      if (!this.code) {
+        showError('Вставьте код');
+        return;
+      }
+      if (!this.compiler) {
+        showError('Укажите язык');
+        return;
+      }
       this.$store.dispatch('Submissions/create', {
         name: this.name,
         code: this.code,
