@@ -47,23 +47,23 @@
     >
       <template slot-scope="props">
         <b-table-column label="Игрок">
-          <span> {{ users[active_user].username }}</span>
+          <span> {{ users[props.row[0]].username }}</span>
         </b-table-column>
 
         <b-table-column label="Противник">
-          <span>{{ users[props.row[0]].username }}</span>
+          <span>{{ users[props.row[1]].username }}</span>
         </b-table-column>
 
         <b-table-column label="Побед" centered>
-          <span class="tag is-success">{{props.row[1][0]}}</span>
+          <span class="tag is-success">{{props.row[2][0]}}</span>
         </b-table-column>
 
         <b-table-column label="В ничью" centered>
-          <span class="tag is-warning"> {{props.row[1][1]}} </span>
+          <span class="tag is-warning"> {{props.row[2][1]}} </span>
         </b-table-column>
 
         <b-table-column label="Поражений" centered>
-          <span class="tag is-danger">{{props.row[1][2]}} </span>
+          <span class="tag is-danger">{{props.row[2][2]}} </span>
         </b-table-column>
 
       </template>
@@ -97,8 +97,26 @@ export default {
       return users;
     },
     fightTable() {
-      const res = Object.entries(this.tournament.data[this.active_user]);
-      return res.filter((value => Number(value[0]) !== this.active_user));
+      const firstStep = [];
+      Object.entries(this.tournament.data[this.active_user]).forEach((value) => {
+        if (Number(value[0]) !== this.active_user) {
+          firstStep.push([this.active_user, ...value]);
+        }
+      });
+      const secondStep = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [user, fights] of Object.entries(this.tournament.data)) {
+        if (Number(user) !== this.active_user) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [opponent, fight] of Object.entries(fights)) {
+            if (Number(opponent) === this.active_user) {
+              const f = [user, opponent, fight];
+              secondStep.push(f);
+            }
+          }
+        }
+      }
+      return firstStep.concat(secondStep);
     },
     rating() {
       const rating = {};
