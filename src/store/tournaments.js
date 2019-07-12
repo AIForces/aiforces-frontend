@@ -10,11 +10,7 @@ const actions = {
   update(ctx) {
     axios.get('/api/tournaments')
       .then((response) => {
-        console.log(response);
         ctx.commit('SET_TOURNAMENTS', response.data);
-        for (let i = 0; i < response.data.length; i += 1) {
-          ctx.dispatch('getTournament', response.data[i].id);
-        }
       })
       .catch(catchError);
   },
