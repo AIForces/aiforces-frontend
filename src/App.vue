@@ -2,7 +2,7 @@
   <div>
     <v-navbar/>
     <div class="сolumns">
-      <div class="column is-10 is-offset-1">
+      <div class="column is-11 is-offset-1" style="margin: auto">
         <div class="notification">
           <router-view></router-view>
         </div>
