@@ -70,18 +70,19 @@ export default {
       }
       return 'has-text-warning';
     },
-  },
-  watch: {
-    currentPage() {
+    getCurrentTournaments() {
       for (let i = 0; i < this.tournaments.length; i += 1) {
         this.$store.dispatch('Tournaments/getTournament', this.tournaments[i].id);
       }
     },
   },
+  watch: {
+    currentPage() {
+      this.getCurrentTournaments();
+    },
+  },
   created() {
-    for (let i = 0; i < this.tournaments.length; i += 1) {
-      this.$store.dispatch('Tournaments/getTournament', this.tournaments[i].id);
-    }
+    this.getCurrentTournaments();
   },
 };
 </script>
