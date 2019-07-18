@@ -1,4 +1,5 @@
 <template>
+  <keep-alive>
   <div>
     <h1 class="title">Отослать код</h1>
     <b-field label="Название">
@@ -27,6 +28,7 @@
       <b-button @click="create" type="is-info">Отправить</b-button>
     </b-field>
   </div>
+  </keep-alive>
 </template>
 
 <script>

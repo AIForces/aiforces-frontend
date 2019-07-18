@@ -1,4 +1,5 @@
 <template>
+  <keep-alive>
   <div>
     <div class="level">
       <div class="level-left">
@@ -68,6 +69,7 @@
       </template>
     </b-table>
   </div>
+  </keep-alive>
 </template>
 
 <script>

@@ -1,6 +1,8 @@
 <template>
+  <keep-alive>
   <div v-html="statements.html">
   </div>
+  </keep-alive>
 </template>
 
 <script>

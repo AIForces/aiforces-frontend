@@ -1,4 +1,5 @@
 <template>
+  <keep-alive>
   <div>
     <div class="level">
       <div class="level-left">
@@ -46,6 +47,7 @@
     >
     </b-pagination>
   </div>
+  </keep-alive>
 </template>
 
 <script>

@@ -4,9 +4,7 @@
     <div class="сolumns">
       <div class="column is-11 is-offset-1" style="margin: auto">
         <div class="notification">
-          <keep-alive>
             <router-view></router-view>
-          </keep-alive>
         </div>
       </div>
     </div>

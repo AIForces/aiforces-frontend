@@ -1,4 +1,5 @@
 <template>
+  <keep-alive>
   <div class="columns">
     <div class="column is-5">
       <h1 class="title">
@@ -16,6 +17,7 @@
       </b-field>
     </div>
   </div>
+  </keep-alive>
 </template>
 
 <script>

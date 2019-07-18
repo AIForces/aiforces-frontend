@@ -1,6 +1,8 @@
 <template>
+  <keep-alive>
   <div v-html="rules.html">
   </div>
+  </keep-alive>
 </template>
 
 <script>
