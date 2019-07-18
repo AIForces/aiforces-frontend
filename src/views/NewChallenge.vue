@@ -1,5 +1,4 @@
 <template>
-  <keep-alive>
   <div>
     <div class="level">
       <div class="level-left">
@@ -153,7 +152,6 @@
     </div>
 
   </div>
-  </keep-alive>
 </template>
 
 <script>

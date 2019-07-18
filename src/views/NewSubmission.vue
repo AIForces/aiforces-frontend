@@ -1,5 +1,4 @@
 <template>
-  <keep-alive>
   <div>
     <h1 class="title">Отослать код</h1>
     <b-field label="Название">
@@ -20,6 +19,7 @@
                 @input="readFile"
                 drag-drop
                 expanded
+                style="width: 100%;"
       >
         <b-input v-model="code" type="textarea" expanded></b-input>
       </b-upload>
@@ -28,7 +28,6 @@
       <b-button @click="create" type="is-info">Отправить</b-button>
     </b-field>
   </div>
-  </keep-alive>
 </template>
 
 <script>
