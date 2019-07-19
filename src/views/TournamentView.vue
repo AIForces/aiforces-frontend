@@ -98,6 +98,7 @@ export default {
     },
     fightTable() {
       const firstStep = [];
+      console.log('active user', this.active_user);
       Object.entries(this.tournament.data[this.active_user]).forEach((value) => {
         if (Number(value[0]) !== this.active_user) {
           firstStep.push([this.active_user, ...value]);
@@ -148,6 +149,7 @@ export default {
     },
   },
   created() {
+    console.log('tournament created', this.self_id);
     this.active_user = this.self_id;
   },
   props: ['id'],
