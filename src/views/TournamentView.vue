@@ -98,7 +98,7 @@ export default {
     },
     fightTable() {
       const firstStep = [];
-      console.log('tournament data N', this.tournament.data[Number(this.active_user)]);
+      console.log('tournament data N', this.tournament);
       console.log('tournament data', this.tournament.data[this.active_user]);
       Object.entries(this.tournament.data[Number(this.active_user)]).forEach((value) => {
         if (Number(value[0]) !== this.active_user) {

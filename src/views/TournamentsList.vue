@@ -75,6 +75,7 @@ export default {
       return 'has-text-warning';
     },
     getCurrentTournaments() {
+      console.log('get current tournaments');
       for (let i = 0; i < this.tournaments.length; i += 1) {
         this.$store.dispatch('Tournaments/getTournament', this.tournaments[i].id);
       }
