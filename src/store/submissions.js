@@ -32,7 +32,12 @@ const actions = {
       .then((response) => {
         console.log(response);
         const mp = new Map(response.data.map(val => [val.id, val]));
-
+        for (let i = 0; i < response.data.length; i += 1) {
+          const value = response.data[i];
+          if (value.primary) {
+            ctx.commit('SET_PRIMARY', value.id);
+          }
+        }
         ctx.commit('SET_SUBMISSIONS', mp);
       })
       .catch(catchError);
