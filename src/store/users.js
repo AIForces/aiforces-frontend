@@ -57,6 +57,7 @@ const actions = {
       .catch(catchError);
   },
   checkAuth(ctx) {
+    console.log('check auth');
     axios.get('/api/sessions')
       .then((response) => {
         if (response.data.logged_in) {

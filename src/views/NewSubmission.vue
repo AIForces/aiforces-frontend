@@ -14,7 +14,7 @@
         </option>
       </b-select>
     </b-field>
-    <b-field label="Исходный код">
+    <b-field label="Исходный код (drag&drop поддерживается)">
       <b-upload v-model="file"
                 @input="readFile"
                 drag-drop
