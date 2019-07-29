@@ -117,7 +117,7 @@
 
       <h2 class="title is-5">Шаг 4. Выберите уровень</h2>
       <b-field>
-        <template v-for="i in 5">
+        <template v-for="i in 10">
           <p class="control" :key="i">
             <b-button  @click="level = i" :type="(level === i) ?'is-info' : ''"> {{ i }}</b-button>
           </p>
